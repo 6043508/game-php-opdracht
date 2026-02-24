@@ -16,14 +16,11 @@ class GameWorld{
     {
         for ($row = 0; $row < $this->size; $row++) {
             for ($col = 0; $col < $this->size; $col++) {
-                $this->map[$row][$col] = [
-                    "type" => "empty",
-                    "event" => false
-                ];
+                $this->map[$row][$col] = "empty";
             }
         }
 
-        $this->map[0][0] = 
+        $this->map[0][0] = "town";
     }
 
     private function randomEntity(): string
