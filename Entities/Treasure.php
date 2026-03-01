@@ -1,14 +1,15 @@
 <?php
-require_once("../Models/GameEntity.php");
+require_once(__DIR__ . "/../Models/GameEntity.php");
+require_once(__DIR__ . "/../Console.php");
 require_once("Player.php");
 //add small chance to find weapon in treasure +/ gold
 //add shop to buy food for energy/weapons
 class Treasure extends GameEntity{
     private int $goldAmount;
 
-    public function __construct(string $name, int $health)
+    public function __construct(string $name, int $health = -1)
     {
-        return parent::__construct($name, $health);
+        parent::__construct($name, $health);
         $this->goldAmount = $this->generateGold(rand(3, 50));
     }
     private function generateGold($n, $x = 5){
@@ -17,6 +18,7 @@ class Treasure extends GameEntity{
 
     public function interact(Player $player){
         $player->collectGold($this->goldAmount);
+        Console::color("You stumbled upon a treasure and found " . $this->goldAmount . "gold!", "yellow");
     }
 
 }

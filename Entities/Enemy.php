@@ -1,5 +1,5 @@
 <?php
-require_once("../Models/GameEntity.php");
+require_once(__DIR__ . "/../Models/GameEntity.php");
 require_once("Player.php");
 
 class Enemy extends GameEntity{

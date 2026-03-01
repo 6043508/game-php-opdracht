@@ -1,5 +1,5 @@
 <?php
-require_once("../Player.php");
+require_once(__DIR__ . "\..\Entities\Player.php");
 abstract class GameEntity{
     public string $name;
     public int $health;
