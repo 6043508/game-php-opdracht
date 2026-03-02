@@ -2,8 +2,7 @@
 require_once(__DIR__ . "/../Models/GameEntity.php");
 require_once(__DIR__ . "/../Console.php");
 require_once("Player.php");
-//add small chance to find weapon in treasure +/ gold
-//add shop to buy food for energy/weapons
+
 class Treasure extends GameEntity{
     private int $goldAmount;
 
@@ -18,7 +17,7 @@ class Treasure extends GameEntity{
 
     public function interact(Player $player){
         $player->collectGold($this->goldAmount);
-        Console::color("You stumbled upon a treasure and found " . $this->goldAmount . "gold!", "yellow");
+        Console::color("You stumbled upon a treasure and found " . $this->goldAmount . " gold!", "yellow");
     }
 
 }

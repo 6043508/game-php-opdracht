@@ -1,16 +1,21 @@
 <?php
 require_once(__DIR__ . "/../Entities/Player.php");
+require_once(__DIR__ . "/../Locations/Locations.php");
+require_once(__DIR__ . "/../Locations/Shop.php");
 
-class Town {
-    private Player $player;
+class Town extends Locations{
+    protected Player $player;
 
     public function __construct(Player $player){
-        $this->player = $player;
+        parent::__construct($player);
     }
 
     public function enter() : void {
-        Console::color("You have entered the town.", "blue");
-        $this->showOptions();
+        if($this->player->previousEvent === "")
+            Console::color("You are currently in the town! (0,0) \nThere are no monsters here and you can return home to rest and heal!", "cyan");
+
+        else Console::color("You have entered the town.", "cyan");
+        $this->showOptions();   
     }
 
     private function showOptions() : void{
@@ -19,17 +24,26 @@ class Town {
         echo "2. Shop\n";
         echo "3. Leave town\n";
 
-        $choice = trim(fgets(STDIN));
+        $choice = (int)trim(fgets(STDIN));
         
         switch ($choice) {
-            case "1":
+            case 1:
                 $this->restAtHome();
                 break;
-            case "2":
-                $this->visitShop();
+
+            case 2:
+                $shop = new Shop(
+                    $this->player, [
+                    Weapon::Knife,
+                    Weapon::Sword,
+                    Weapon::Hammer
+                ]);
+
+                $shop->enter();
                 break;
-            case "3":
+            case 3:
                 Console::color("You leave the town.", "blue");
+                $this->player->moveInDirection("east");
                 return;
             default:
                 Console::color("Invalid choice. Try again.", "red");
@@ -44,8 +58,4 @@ class Town {
         $this->showOptions();
     }
 
-    private function visitShop(): void {
-        Console::color("Welcome to the shop! (Feature to implement)", "yellow");
-        $this->showOptions();
-    }
 }
